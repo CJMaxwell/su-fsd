@@ -8,7 +8,7 @@ interface Item {
   filename: string;
 }
 
-function transformData(data: any[]) {
+function transformData(data: Record<string, string>[]) {
   return data.map(entry => {
     const createdAt = Object.keys(entry)[0];
     const filenameKey = Object.keys(entry).find(key => key !== createdAt);
@@ -27,7 +27,7 @@ export default function Home() {
     fetch("/data.csv")
       .then((response) => response.text())
       .then((csv) => {
-        Papa.parse<any>(csv, {
+        Papa.parse<Record<string, string>>(csv, {
           delimiter: ";",
           header: true,
           complete: (result) => {
